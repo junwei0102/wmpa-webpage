@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WMPA: World-Model Policy Arbiter for Goal-Conditioned Reinforcement Learning</title>
+  <meta name="description" content="WMPA selects among frozen goal-conditioned policies at test time by rolling each one forward in a learned world model and scoring the imagined futures with one shared value function.">
+  <meta name="author" content="Junwei Quan, Evgenii Opryshko, Nicholas Rhinehart, Igor Gilitschenski">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="World-Model Policy Arbiter for Goal-Conditioned Reinforcement Learning">
+  <meta property="og:description" content="WMPA selects among frozen goal-conditioned policies at test time by rolling each one forward in a learned world model and scoring the imagined futures with one shared value function.">
+  <meta property="og:url" content="https://junwei0102.github.io/wmpa-webpage/">
+  <meta property="og:image" content="https://junwei0102.github.io/wmpa-webpage/static/images/wmpa_overview.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="World-Model Policy Arbiter for Goal-Conditioned Reinforcement Learning">
+  <meta name="twitter:description" content="WMPA selects among frozen goal-conditioned policies at test time by rolling each one forward in a learned world model and scoring the imagined futures with one shared value function.">
+  <meta name="twitter:image" content="https://junwei0102.github.io/wmpa-webpage/static/images/wmpa_overview.png">
+
+  <meta name="citation_title" content="World-Model Policy Arbiter for Goal-Conditioned Reinforcement Learning">
+  <meta name="citation_author" content="Quan, Junwei">
+  <meta name="citation_author" content="Opryshko, Evgenii">
+  <meta name="citation_author" content="Rhinehart, Nicholas">
+  <meta name="citation_author" content="Gilitschenski, Igor">
+  <meta name="citation_publication_date" content="2026">
+
+  <link rel="icon" type="image/svg+xml" href="static/images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  <style>
+    .icon svg { width: 1.05em; height: 1.05em; }
+    .nowrap, .is-family-monospace { white-space: nowrap; }
+    @media (max-width: 768px) { .section-intro, .content.has-text-justified, .figure-caption { text-align: left !important; } }
+    .hero > .container { width: 100%; }  /* keep sections at viewport width on phones; the chart scrolls inside its own box */
+    .button[disabled], .button[disabled]:hover { opacity: .5; transform: none; box-shadow: none; cursor: default; background: var(--text-primary) !important; }
+    .publication-authors sup { font-size: .65em; }
+    .affiliations { color: var(--text-secondary); }
+    .affiliations span + span { margin-left: 1.25rem; }
+    .section-intro { font-size: 1.1rem; line-height: 1.8; color: var(--text-secondary); }
+    .figure-caption { color: var(--text-secondary); font-size: .95rem; line-height: 1.6; margin-top: .9rem; }
+    .wide-img { width: 100%; height: auto; display: block; border-radius: 8px; }
+    .wmpa-chart { margin: 1.5rem 0 0; }
+    .wmpa-chart .scroll { overflow-x: auto; }
+    .wmpa-chart svg { width: 100%; min-width: 640px; height: auto; display: block; font-family: 'Inter', system-ui, sans-serif; }
+    .wmpa-chart .ds { font: 12px 'SF Mono', Menlo, Consolas, monospace; fill: #64748b; }
+    .wmpa-chart .avg { font-weight: 700; font-size: 12.5px; fill: #1e293b; }
+    .wmpa-chart .fam { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; fill: #1e293b; }
+    .wmpa-chart .dv { font-size: 12.5px; font-variant-numeric: tabular-nums; fill: #64748b; }
+    .wmpa-chart .dh, .wmpa-chart .legend text { font-size: 12.5px; fill: #64748b; }
+    .wmpa-chart .tick { font-size: 11.5px; fill: #94a3b8; font-variant-numeric: tabular-nums; }
+    .wmpa-chart .axis { font-size: 12px; fill: #64748b; }
+    .wmpa-chart .hit { fill: transparent; }
+    .wmpa-chart .row:hover .hit { fill: #f1f5f9; }
+    .numbers { margin-top: 1.25rem; }
+    .numbers summary { cursor: pointer; color: var(--primary-color); font-weight: 600; }
+    .numbers table { margin-top: .75rem; font-size: .9rem; }
+    .numbers .avg-row td { font-weight: 700; }
+    .copy-bibtex-btn svg { width: 1em; height: 1em; }
+    .scroll-to-top svg { width: 1.2rem; height: 1.2rem; }
+  </style>
+  <script defer src="static/js/index.js"></script>
+</head>
+<body>
+
+<button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+<main id="main-content">
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-2 publication-title">World-Model Policy Arbiter for<br><span class="nowrap">Goal-Conditioned</span> Reinforcement Learning</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><a href="https://scholar.google.com/citations?user=oELpqRUAAAAJ&amp;hl=en" target="_blank" rel="noopener">Junwei Quan</a><sup>1</sup>,</span>
+            <span class="author-block"><a href="https://ktolnos.github.io/" target="_blank" rel="noopener">Evgenii Opryshko</a><sup>1,2</sup>,</span>
+            <span class="author-block"><a href="https://scholar.google.com/citations?user=xUGZX_MAAAAJ&amp;hl=en" target="_blank" rel="noopener">Nicholas Rhinehart</a><sup>1</sup>,</span>
+            <span class="author-block"><a href="https://www.gilitschenski.org/igor/" target="_blank" rel="noopener">Igor Gilitschenski</a><sup>1,2</sup></span>
+          </div>
+          <div class="is-size-5 publication-authors affiliations">
+            <span><sup>1</sup>University of Toronto</span><span><sup>2</sup>Vector Institute</span>
+          </div>
+          <div class="publication-links">
+            <!-- After the arXiv announcement, add a Paper button (https://arxiv.org/pdf/ARXIV_ID)
+                 and turn the arXiv button below into a link to https://arxiv.org/abs/ARXIV_ID. -->
+            <span class="link-block">
+              <a href="https://github.com/junwei0102/World-Model-Policy-Arbiter" target="_blank" rel="noopener" class="external-link button is-normal is-rounded is-dark">
+                <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></span><span>Code</span>
+              </a>
+            </span>
+            <span class="link-block">
+              <a class="external-link button is-normal is-rounded is-dark" disabled aria-disabled="true" title="arXiv link coming soon">
+                <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span><span>arXiv (coming soon)</span>
+              </a>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img src="static/images/wmpa_overview.png" alt="WMPA overview: frozen policies are rolled out in a learned world model, the imagined futures are scored by a learned value function, and the best policy acts before the next reassessment" class="wide-img">
+      <p class="section-intro has-text-justified" style="margin-top: 1.5rem;">
+        WMPA starts from a bank of frozen goal-conditioned policies trained by different offline GCRL algorithms.
+        At each arbitration step it rolls every policy forward in a learned state-space world model, scores the
+        imagined futures with one shared goal-conditioned value function, and executes the highest-scoring policy
+        for a short commitment interval before choosing again. No policy is retrained.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section hero is-small">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">WMPA in Action</h2>
+    <p class="section-intro has-text-justified">
+      No single offline GCRL algorithm is best across tasks, or even across the phases of one task.
+      On <span class="is-family-monospace">cube-double-play</span>, where a robot arm must stack two cubes,
+      GCIQL succeeds in 36% of episodes and HIQL in only 5%. WMPA, choosing among the six frozen policies
+      within each episode, succeeds in 69%.
+    </p>
+    <img src="static/images/episode_cube_double.png" alt="A cube-double-play episode in which WMPA alternates between HIQL and GCIQL until both cubes are stacked" class="wide-img" style="margin-top: 1.5rem;">
+    <p class="figure-caption has-text-centered">
+      One <span class="is-family-monospace">cube-double-play</span> episode. Top: the real state at four arbitration
+      steps and at success, with the policy WMPA selects there. Bottom: the policy executed over the whole episode,
+      one block per arbitration. Control alternates between HIQL, which moves the free gripper to the next cube,
+      and GCIQL, which grasps and places it.
+    </p>
+  </div>
+</section>
+
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>Offline goal-conditioned reinforcement learning (GCRL) has produced a diverse set of goal-reaching algorithms, yet no single algorithm performs best across environments, goals, and even different phases of the same task. Rather than deploying only the best-performing policy, we ask whether a set of frozen goal-conditioned policies can be used collectively as a <em>portfolio</em>, deciding at every state which policy should act. Choosing a policy at each state is not straightforward. The policies&rsquo; own value functions cannot be compared directly: they may use different scales, and some policies have no value function. We need to judge each policy by the states it is likely to reach, even though we can execute only one policy at a time. We also need to avoid switching so often that control becomes unstable. To address these challenges, we introduce World-Model Policy Arbiter (WMPA), a test-time framework that, given a set of frozen policies as input, rolls out each frozen policy in a learned state-space world model, evaluates the imagined futures with a shared goal-conditioned value function, and executes the highest-scoring policy for a short commitment interval before the next round of arbitration (policy selection). WMPA assumes access to a bank of frozen goal-conditioned policies and requires neither policy retraining nor privileged task-specific knowledge. Under the official OGBench evaluation protocol on 18 state-based datasets spanning maze navigation as well as cube, scene, and puzzle manipulation, WMPA improves the macro-average success rate from the 44% achieved by the best policy selected per dataset to 58%, with statistically significant gains on 12 datasets. These gains include +33 percentage points on <span class="is-family-monospace">cube-double-play</span> and +36 percentage points on <span class="is-family-monospace">scene-play</span>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section hero is-small">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Results</h2>
+    <p class="section-intro has-text-justified">
+      We evaluate WMPA under the official OGBench protocol on 18 state-based datasets spanning maze navigation and
+      cube, scene, and puzzle manipulation. The bank holds the six OGBench reference learners (GCBC, GCIVL, GCIQL,
+      QRL, CRL, HIQL), and every method runs on the same episodes (5 goals &times; 50 episodes &times; 3 bank seeds).
+      WMPA raises the macro-average success rate from 44% for the best single policy per dataset to 58%, with
+      statistically significant gains on 12 datasets. The largest gains are on multi-object manipulation: +41 points
+      on <span class="is-family-monospace">scene-noisy</span>, +36 on <span class="is-family-monospace">scene-play</span>,
+      +35 on <span class="is-family-monospace">cube-double-noisy</span>, and +33 on
+      <span class="is-family-monospace">cube-double-play</span>. Switching to a random policy at the same interval
+      reaches only 39%, and on 7 datasets WMPA significantly exceeds a per-episode hindsight oracle that never
+      switches, so part of the gain comes from composing policies within an episode.
+    </p>
+    <figure class="wmpa-chart">
+      <div class="scroll"><svg viewBox="0 0 880 608" role="img" aria-labelledby="chart-title chart-desc" xmlns="http://www.w3.org/2000/svg"><title id="chart-title">Success rate per dataset: best single policy versus WMPA</title><desc id="chart-desc">Horizontal bars for 18 OGBench datasets. WMPA averages 58% against 44% for the best single policy.</desc><line x1="274.0" x2="274.0" y1="34" y2="562.0" stroke="#cbd5e1" stroke-width="1"/><text class="tick" x="274.0" y="578.0" text-anchor="middle">0</text><line x1="404.0" x2="404.0" y1="34" y2="562.0" stroke="#e2e8f0" stroke-width="1"/><text class="tick" x="404.0" y="578.0" text-anchor="middle">25</text><line x1="534.0" x2="534.0" y1="34" y2="562.0" stroke="#e2e8f0" stroke-width="1"/><text class="tick" x="534.0" y="578.0" text-anchor="middle">50</text><line x1="664.0" x2="664.0" y1="34" y2="562.0" stroke="#e2e8f0" stroke-width="1"/><text class="tick" x="664.0" y="578.0" text-anchor="middle">75</text><line x1="794.0" x2="794.0" y1="34" y2="562.0" stroke="#e2e8f0" stroke-width="1"/><text class="tick" x="794.0" y="578.0" text-anchor="middle">100</text><text class="axis" x="534.0" y="598.0" text-anchor="middle">Success rate (%)</text><g class="legend"><rect x="274" y="8" width="14" height="8" rx="2" fill="#949494"/><text x="294" y="16">Best single policy (per dataset)</text><rect x="506" y="8" width="14" height="8" rx="2" fill="#2563eb"/><text x="526" y="16">WMPA</text><text class="dh" x="872" y="16" text-anchor="end">Δ (points)</text></g><text class="fam" x="0" y="65.5">Maze</text><text class="fam" x="0" y="177.5">Cube</text><text class="fam" x="0" y="289.5">Scene</text><text class="fam" x="0" y="426.5">Puzzle</text><g class="row"><title>pointmaze-medium-navigate | best single policy (QRL): 76 ± 17% | WMPA: 79 ± 3% | Δ +3 [-17, +17]</title><rect class="hit" x="0" y="36.5" width="872" height="25.0" rx="4"/><text class="ds" x="262" y="53.0" text-anchor="end">pointmaze-medium-navigate</text><path d="M274.0,40.0H665.2A4,4 0 0 1 669.2,44.0V44.0A4,4 0 0 1 665.2,48.0H274.0Z" fill="#949494"/><path d="M274.0,50.0H680.8A4,4 0 0 1 684.8,54.0V54.0A4,4 0 0 1 680.8,58.0H274.0Z" fill="#2563eb"/><text class="dv" x="872" y="53.0" text-anchor="end">+3</text></g><g class="row"><title>antmaze-large-navigate | best single policy (HIQL): 90 ± 3% | WMPA: 91 ± 3% | Δ +0 [-3, +4]</title><rect class="hit" x="0" y="61.5" width="872" height="25.0" rx="4"/><text class="ds" x="262" y="78.0" text-anchor="end">antmaze-large-navigate</text><path d="M274.0,65.0H738.0A4,4 0 0 1 742.0,69.0V69.0A4,4 0 0 1 738.0,73.0H274.0Z" fill="#949494"/><path d="M274.0,75.0H743.2A4,4 0 0 1 747.2,79.0V79.0A4,4 0 0 1 743.2,83.0H274.0Z" fill="#2563eb"/><text class="dv" x="872" y="78.0" text-anchor="end">+0</text></g><line x1="0" x2="872" y1="94.0" y2="94.0" stroke="#e2e8f0" stroke-width="1"/><g class="row"><title>cube-single-play | best single policy (GCIQL): 71 ± 3% | WMPA: 85 ± 3% | Δ +14 [+10, +18]</title><rect class="hit" x="0" y="98.5" width="872" height="25.0" rx="4"/><text class="ds" x="262" y="115.0" text-anchor="end">cube-single-play</text><path d="M274.0,102.0H639.2A4,4 0 0 1 643.2,106.0V106.0A4,4 0 0 1 639.2,110.0H274.0Z" fill="#949494"/><path d="M274.0,112.0H712.0A4,4 0 0 1 716.0,116.0V116.0A4,4 0 0 1 712.0,120.0H274.0Z" fill="#2563eb"/><text class="dv" x="872" y="115.0" text-anchor="end">+14</text></g><g class="row"><title>cube-single-noisy | best single policy (GCIQL): 99 ± 1% | WMPA: 100 ± 0% | Δ +1 [+0, +2]</title><rect class="hit" x="0" y="123.5" width="872" height="25.0" rx="4"/><text class="ds" x="262" y="140.0" text-anchor="end">cube-single-noisy</text><path d="M274.0,127.0H784.8A4,4 0 0 1 788.8,131.0V131.0A4,4 0 0 1 784.8,135.0H274.0Z" fill="#949494"/><path d="M274.0,137.0H790.0A4,4 0 0 1 794.0,141.0V141.0A4,4 0 0 1 790.0,145.0H274.0Z" fill="#2563eb"/><text class="dv" x="872" y="140.0" text-anchor="end">+1</text></g><g class="row"><title>cube-double-play | best single policy (GCIQL): 36 ± 7% | WMPA: 69 ± 3% | Δ +33 [+25, +40]</title><rect class="hit" x="0" y="148.5" width="872" height="25.0" rx="4"/><text class="ds" x="262" y="165.0" text-anchor="end">cube-double-play</text><path d="M274.0,152.0H457.2A4,4 0 0 1 461.2,156.0V156.0A4,4 0 0 1 457.2,160.0H274.0Z" fill="#949494"/><path d="M274.0,162.0H628.8A4,4 0 0 1 632.8,166.0V166.0A4,4 0 0 1 628.8,170.0H274.0Z" fill="#2563eb"/><text class="dv" x="872" y="165.0" text-anchor="end">+33</text></g><g class="row"><title>cube-double-noisy | best single policy (GCIQL): 26 ± 9% | WMPA: 60 ± 7% | Δ +35 [+30, +40]</title><rect class="hit" x="0" y="173.5" width="872" height="25.0" rx="4"/><text class="ds" x="262" y="190.0" text-anchor="end">cube-double-noisy</text><path d="M274.0,177.0H405.2A4,4 0 0 1 409.2,181.0V181.0A4,4 0 0 1 405.2,185.0H274.0Z" fill="#949494"/><path d="M274.0,187.0H582.0A4,4 0 0 1 586.0,191.0V191.0A4,4 0 0 1 582.0,195.0H274.0Z" fill="#2563eb"/><text class="dv" x="872" y="190.0" text-anchor="end">+35</text></g><g class="row"><title>cube-triple-play | best single policy (CRL): 5 ± 3% | WMPA: 1 ± 1% | Δ -4 [-8, -1]</title><rect class="hit" x="0" y="198.5" width="872" height="25.0" rx="4"/><text class="ds" x="262" y="215.0" text-anchor="end">cube-triple-play</text><path d="M274.0,202.0H296.0A4,4 0 0 1 300.0,206.0V206.0A4,4 0 0 1 296.0,210.0H274.0Z" fill="#949494"/><path d="M274.0,212.0H275.2A4,4 0 0 1 279.2,216.0V216.0A4,4 0 0 1 275.2,220.0H274.0Z" fill="#2563eb"/><text class="dv" x="872" y="215.0" text-anchor="end">−4</text></g><g class="row"><title>cube-triple-noisy | best single policy (GCIVL): 9 ± 3% | WMPA: 18 ± 3% | Δ +9 [+6, +12]</title><rect class="hit" x="0" y="223.5" width="872" height="25.0" rx="4"/><text class="ds" x="262" y="240.0" text-anchor="end">cube-triple-noisy</text><path d="M274.0,227.0H316.8A4,4 0 0 1 320.8,231.0V231.0A4,4 0 0 1 316.8,235.0H274.0Z" fill="#949494"/><path d="M274.0,237.0H363.6A4,4 0 0 1 367.6,241.0V241.0A4,4 0 0 1 363.6,245.0H274.0Z" fill="#2563eb"/><text class="dv" x="872" y="240.0" text-anchor="end">+9</text></g><line x1="0" x2="872" y1="256.0" y2="256.0" stroke="#e2e8f0" stroke-width="1"/><g class="row"><title>scene-play | best single policy (GCIQL): 52 ± 5% | WMPA: 87 ± 4% | Δ +36 [+30, +41]</title><rect class="hit" x="0" y="260.5" width="872" height="25.0" rx="4"/><text class="ds" x="262" y="277.0" text-anchor="end">scene-play</text><path d="M274.0,264.0H540.4A4,4 0 0 1 544.4,268.0V268.0A4,4 0 0 1 540.4,272.0H274.0Z" fill="#949494"/><path d="M274.0,274.0H722.4A4,4 0 0 1 726.4,278.0V278.0A4,4 0 0 1 722.4,282.0H274.0Z" fill="#2563eb"/><text class="dv" x="872" y="277.0" text-anchor="end">+36</text></g><g class="row"><title>scene-noisy | best single policy (GCIVL): 30 ± 3% | WMPA: 70 ± 5% | Δ +41 [+36, +45]</title><rect class="hit" x="0" y="285.5" width="872" height="25.0" rx="4"/><text class="ds" x="262" y="302.0" text-anchor="end">scene-noisy</text><path d="M274.0,289.0H426.0A4,4 0 0 1 430.0,293.0V293.0A4,4 0 0 1 426.0,297.0H274.0Z" fill="#949494"/><path d="M274.0,299.0H634.0A4,4 0 0 1 638.0,303.0V303.0A4,4 0 0 1 634.0,307.0H274.0Z" fill="#2563eb"/><text class="dv" x="872" y="302.0" text-anchor="end">+41</text></g><line x1="0" x2="872" y1="318.0" y2="318.0" stroke="#e2e8f0" stroke-width="1"/><g class="row"><title>puzzle-3x3-play | best single policy (GCIQL): 91 ± 4% | WMPA: 100 ± 0% | Δ +9 [+5, +13]</title><rect class="hit" x="0" y="322.5" width="872" height="25.0" rx="4"/><text class="ds" x="262" y="339.0" text-anchor="end">puzzle-3x3-play</text><path d="M274.0,326.0H743.2A4,4 0 0 1 747.2,330.0V330.0A4,4 0 0 1 743.2,334.0H274.0Z" fill="#949494"/><path d="M274.0,336.0H790.0A4,4 0 0 1 794.0,340.0V340.0A4,4 0 0 1 790.0,344.0H274.0Z" fill="#2563eb"/><text class="dv" x="872" y="339.0" text-anchor="end">+9</text></g><g class="row"><title>puzzle-3x3-noisy | best single policy (GCIQL): 91 ± 3% | WMPA: 93 ± 2% | Δ +1 [-1, +4]</title><rect class="hit" x="0" y="347.5" width="872" height="25.0" rx="4"/><text class="ds" x="262" y="364.0" text-anchor="end">puzzle-3x3-noisy</text><path d="M274.0,351.0H743.2A4,4 0 0 1 747.2,355.0V355.0A4,4 0 0 1 743.2,359.0H274.0Z" fill="#949494"/><path d="M274.0,361.0H753.6A4,4 0 0 1 757.6,365.0V365.0A4,4 0 0 1 753.6,369.0H274.0Z" fill="#2563eb"/><text class="dv" x="872" y="364.0" text-anchor="end">+1</text></g><g class="row"><title>puzzle-4x4-play | best single policy (GCIQL): 24 ± 5% | WMPA: 51 ± 8% | Δ +27 [+18, +36]</title><rect class="hit" x="0" y="372.5" width="872" height="25.0" rx="4"/><text class="ds" x="262" y="389.0" text-anchor="end">puzzle-4x4-play</text><path d="M274.0,376.0H394.8A4,4 0 0 1 398.8,380.0V380.0A4,4 0 0 1 394.8,384.0H274.0Z" fill="#949494"/><path d="M274.0,386.0H535.2A4,4 0 0 1 539.2,390.0V390.0A4,4 0 0 1 535.2,394.0H274.0Z" fill="#2563eb"/><text class="dv" x="872" y="389.0" text-anchor="end">+27</text></g><g class="row"><title>puzzle-4x4-noisy | best single policy (GCIQL): 34 ± 5% | WMPA: 58 ± 11% | Δ +24 [+16, +32]</title><rect class="hit" x="0" y="397.5" width="872" height="25.0" rx="4"/><text class="ds" x="262" y="414.0" text-anchor="end">puzzle-4x4-noisy</text><path d="M274.0,401.0H446.8A4,4 0 0 1 450.8,405.0V405.0A4,4 0 0 1 446.8,409.0H274.0Z" fill="#949494"/><path d="M274.0,411.0H571.6A4,4 0 0 1 575.6,415.0V415.0A4,4 0 0 1 571.6,419.0H274.0Z" fill="#2563eb"/><text class="dv" x="872" y="414.0" text-anchor="end">+24</text></g><g class="row"><title>puzzle-4x5-play | best single policy (GCIQL): 14 ± 3% | WMPA: 18 ± 3% | Δ +4 [+3, +6]</title><rect class="hit" x="0" y="422.5" width="872" height="25.0" rx="4"/><text class="ds" x="262" y="439.0" text-anchor="end">puzzle-4x5-play</text><path d="M274.0,426.0H342.8A4,4 0 0 1 346.8,430.0V430.0A4,4 0 0 1 342.8,434.0H274.0Z" fill="#949494"/><path d="M274.0,436.0H363.6A4,4 0 0 1 367.6,440.0V440.0A4,4 0 0 1 363.6,444.0H274.0Z" fill="#2563eb"/><text class="dv" x="872" y="439.0" text-anchor="end">+4</text></g><g class="row"><title>puzzle-4x5-noisy | best single policy (GCIVL): 20 ± 3% | WMPA: 20 ± 3% | Δ +0 [+0, +1]</title><rect class="hit" x="0" y="447.5" width="872" height="25.0" rx="4"/><text class="ds" x="262" y="464.0" text-anchor="end">puzzle-4x5-noisy</text><path d="M274.0,451.0H374.0A4,4 0 0 1 378.0,455.0V455.0A4,4 0 0 1 374.0,459.0H274.0Z" fill="#949494"/><path d="M274.0,461.0H374.0A4,4 0 0 1 378.0,465.0V465.0A4,4 0 0 1 374.0,469.0H274.0Z" fill="#2563eb"/><text class="dv" x="872" y="464.0" text-anchor="end">+0</text></g><g class="row"><title>puzzle-4x6-play | best single policy (GCIQL): 11 ± 2% | WMPA: 17 ± 3% | Δ +6 [+3, +9]</title><rect class="hit" x="0" y="472.5" width="872" height="25.0" rx="4"/><text class="ds" x="262" y="489.0" text-anchor="end">puzzle-4x6-play</text><path d="M274.0,476.0H327.2A4,4 0 0 1 331.2,480.0V480.0A4,4 0 0 1 327.2,484.0H274.0Z" fill="#949494"/><path d="M274.0,486.0H358.4A4,4 0 0 1 362.4,490.0V490.0A4,4 0 0 1 358.4,494.0H274.0Z" fill="#2563eb"/><text class="dv" x="872" y="489.0" text-anchor="end">+6</text></g><g class="row"><title>puzzle-4x6-noisy | best single policy (GCIQL): 19 ± 3% | WMPA: 20 ± 3% | Δ +1 [-0, +2]</title><rect class="hit" x="0" y="497.5" width="872" height="25.0" rx="4"/><text class="ds" x="262" y="514.0" text-anchor="end">puzzle-4x6-noisy</text><path d="M274.0,501.0H368.8A4,4 0 0 1 372.8,505.0V505.0A4,4 0 0 1 368.8,509.0H274.0Z" fill="#949494"/><path d="M274.0,511.0H374.0A4,4 0 0 1 378.0,515.0V515.0A4,4 0 0 1 374.0,519.0H274.0Z" fill="#2563eb"/><text class="dv" x="872" y="514.0" text-anchor="end">+1</text></g><line x1="0" x2="872" y1="530.0" y2="530.0" stroke="#cbd5e1" stroke-width="1"/><g class="row"><title>Average over 18 datasets | best single policy: 44% | WMPA: 58% | Δ +13</title><rect class="hit" x="0" y="536.5" width="872" height="25.0" rx="4"/><text class="avg" x="262" y="553.0" text-anchor="end">Average (18 datasets)</text><path d="M274.0,540.0H498.8A4,4 0 0 1 502.8,544.0V544.0A4,4 0 0 1 498.8,548.0H274.0Z" fill="#949494"/><path d="M274.0,550.0H571.6A4,4 0 0 1 575.6,554.0V554.0A4,4 0 0 1 571.6,558.0H274.0Z" fill="#2563eb"/><text class="dv avg" x="872" y="553.0" text-anchor="end">+13</text></g></svg></div>
+      <figcaption class="figure-caption has-text-centered">
+        Success rate (%) on each dataset: the best single policy in the bank versus WMPA over the same frozen
+        policies, averaged over 3 bank seeds &times; 250 episodes. &Delta; is WMPA minus the best policy.
+        Hover over a row for the 95% intervals.
+      </figcaption>
+    </figure>
+    <details class="numbers">
+      <summary>Show the numbers as a table</summary>
+      <table class="table is-narrow is-fullwidth is-hoverable"><thead><tr><th>Family</th><th>Dataset</th><th>Best single policy</th><th>Best (%)</th><th>WMPA (%)</th><th>Δ [95% CI]</th></tr></thead><tbody><tr><td>Maze</td><td><code>pointmaze-medium-navigate</code></td><td>QRL</td><td>76 ± 17</td><td>79 ± 3</td><td>+3 [−17, +17]</td></tr><tr><td>Maze</td><td><code>antmaze-large-navigate</code></td><td>HIQL</td><td>90 ± 3</td><td>91 ± 3</td><td>+0 [−3, +4]</td></tr><tr><td>Cube</td><td><code>cube-single-play</code></td><td>GCIQL</td><td>71 ± 3</td><td>85 ± 3</td><td>+14 [+10, +18]*</td></tr><tr><td>Cube</td><td><code>cube-single-noisy</code></td><td>GCIQL</td><td>99 ± 1</td><td>100 ± 0</td><td>+1 [+0, +2]*</td></tr><tr><td>Cube</td><td><code>cube-double-play</code></td><td>GCIQL</td><td>36 ± 7</td><td>69 ± 3</td><td>+33 [+25, +40]*</td></tr><tr><td>Cube</td><td><code>cube-double-noisy</code></td><td>GCIQL</td><td>26 ± 9</td><td>60 ± 7</td><td>+35 [+30, +40]*</td></tr><tr><td>Cube</td><td><code>cube-triple-play</code></td><td>CRL</td><td>5 ± 3</td><td>1 ± 1</td><td>−4 [−8, −1]*</td></tr><tr><td>Cube</td><td><code>cube-triple-noisy</code></td><td>GCIVL</td><td>9 ± 3</td><td>18 ± 3</td><td>+9 [+6, +12]*</td></tr><tr><td>Scene</td><td><code>scene-play</code></td><td>GCIQL</td><td>52 ± 5</td><td>87 ± 4</td><td>+36 [+30, +41]*</td></tr><tr><td>Scene</td><td><code>scene-noisy</code></td><td>GCIVL</td><td>30 ± 3</td><td>70 ± 5</td><td>+41 [+36, +45]*</td></tr><tr><td>Puzzle</td><td><code>puzzle-3x3-play</code></td><td>GCIQL</td><td>91 ± 4</td><td>100 ± 0</td><td>+9 [+5, +13]*</td></tr><tr><td>Puzzle</td><td><code>puzzle-3x3-noisy</code></td><td>GCIQL</td><td>91 ± 3</td><td>93 ± 2</td><td>+1 [−1, +4]</td></tr><tr><td>Puzzle</td><td><code>puzzle-4x4-play</code></td><td>GCIQL</td><td>24 ± 5</td><td>51 ± 8</td><td>+27 [+18, +36]*</td></tr><tr><td>Puzzle</td><td><code>puzzle-4x4-noisy</code></td><td>GCIQL</td><td>34 ± 5</td><td>58 ± 11</td><td>+24 [+16, +32]*</td></tr><tr><td>Puzzle</td><td><code>puzzle-4x5-play</code></td><td>GCIQL</td><td>14 ± 3</td><td>18 ± 3</td><td>+4 [+3, +6]*</td></tr><tr><td>Puzzle</td><td><code>puzzle-4x5-noisy</code></td><td>GCIVL</td><td>20 ± 3</td><td>20 ± 3</td><td>+0 [+0, +1]</td></tr><tr><td>Puzzle</td><td><code>puzzle-4x6-play</code></td><td>GCIQL</td><td>11 ± 2</td><td>17 ± 3</td><td>+6 [+3, +9]*</td></tr><tr><td>Puzzle</td><td><code>puzzle-4x6-noisy</code></td><td>GCIQL</td><td>19 ± 3</td><td>20 ± 3</td><td>+1 [−0, +2]</td></tr><tr class="avg-row"><td colspan="3">Average (18 datasets)</td><td>44</td><td>58</td><td>+13</td></tr></tbody></table>
+      <p class="figure-caption">Mean success rate &plusmn; half-width of the 95% hierarchical-bootstrap interval. &Delta; is the paired per-episode difference with its 95% interval; * marks an interval that excludes zero.</p>
+    </details>
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <div class="bibtex-header">
+      <h2 class="title">BibTeX</h2>
+      <button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX to clipboard">
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span class="copy-text">Copy</span>
+      </button>
+    </div>
+    <pre id="bibtex-code"><code>@article{quan2026wmpa,
+  title   = {World-Model Policy Arbiter for Goal-Conditioned Reinforcement Learning},
+  author  = {Quan, Junwei and Opryshko, Evgenii and Rhinehart, Nicholas and Gilitschenski, Igor},
+  journal = {arXiv preprint},
+  year    = {2026}
+}</code></pre>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener">Academic Project Page Template</a>,
+            which was adopted from the <a href="https://nerfies.github.io" target="_blank" rel="noopener">Nerfies</a> project page.
+            This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
